@@ -3,8 +3,15 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/Bulmaro/AndroidStudioProjects/ComposeApp/app/src/main/res/drawable-v24/hexagramgray.xml" value="0.1145" />
+        <entry key="..\:/Users/Bulmaro/AndroidStudioProjects/ComposeApp/app/src/main/res/drawable-v24/pencil_24.xml" value="0.1145" />
         <entry key="..\:/Users/Bulmaro/AndroidStudioProjects/ComposeApp/app/src/main/res/drawable/bird.xml" value="0.1265" />
+        <entry key="..\:/Users/Bulmaro/AndroidStudioProjects/ComposeApp/app/src/main/res/drawable/email.xml" value="0.1265" />
+        <entry key="..\:/Users/Bulmaro/AndroidStudioProjects/ComposeApp/app/src/main/res/drawable/hexagram.xml" value="0.1265" />
+        <entry key="..\:/Users/Bulmaro/AndroidStudioProjects/ComposeApp/app/src/main/res/drawable/hexagramyellow.xml" value="0.1145" />
+        <entry key="..\:/Users/Bulmaro/AndroidStudioProjects/ComposeApp/app/src/main/res/drawable/mayorque.xml" value="0.1145" />
         <entry key="..\:/Users/Bulmaro/AndroidStudioProjects/ComposeApp/app/src/main/res/drawable/minus.xml" value="0.1265" />
+        <entry key="..\:/Users/Bulmaro/AndroidStudioProjects/ComposeApp/app/src/main/res/drawable/phone_outgoing.xml" value="0.1265" />
         <entry key="..\:/Users/Bulmaro/AndroidStudioProjects/ComposeApp/app/src/main/res/drawable/plus.xml" value="0.1265" />
       </map>
     </option>
