@@ -65,6 +65,7 @@ class MainActivity : ComponentActivity(), InterfaceView.View {
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center
             ) {
+                text()
                 ViewPractice()
                 ButtonResetValue()
                 ButtonDecreaseValue()
@@ -79,9 +80,18 @@ class MainActivity : ComponentActivity(), InterfaceView.View {
     fun ViewPractice() {
 
         Button(onClick = {initView()}) {
-            Text(text = "Contar")
+            Text(text = "incrementar + 1")
             
         }
+
+    }
+    @Composable
+    fun text() {
+
+
+            Text(text = "El valor es: " + presenter?.getCounterValue())
+
+
 
     }
     @Composable

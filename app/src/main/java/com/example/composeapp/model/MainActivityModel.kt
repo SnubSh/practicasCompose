@@ -1,8 +1,17 @@
 package com.example.composeapp.model
 
 import com.example.composeapp.interfaceView.InterfaceView
-
+//ViewModel()
 class MainActivityModel : InterfaceView.Model {
+//Nuevas propiedades
+//private val counter = mutableStateOf(0)
+//val counter: State<Int> = _counter //import runtime
+//fun add(){
+// _counter.value = _counter.value + 1}
+//
+//
+//
+//
 
     private var mCounter = 0
 
@@ -31,7 +40,7 @@ class MainActivityModel : InterfaceView.Model {
 
         mCounter = 0
     }
-
+//
 
 
 }
