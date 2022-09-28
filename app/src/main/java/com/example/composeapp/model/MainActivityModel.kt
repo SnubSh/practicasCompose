@@ -1,45 +1,37 @@
-package com.example.composeapp.model
 
-import com.example.composeapp.interfaceView.InterfaceView
-//ViewModel()
-class MainActivityModel : InterfaceView.Model {
-//Nuevas propiedades
-//private val counter = mutableStateOf(0)
-//val counter: State<Int> = _counter //import runtime
-//fun add(){
-// _counter.value = _counter.value + 1}
+
+import androidx.compose.runtime.State
+import androidx.compose.runtime.mutableStateOf
+import androidx.lifecycle.ViewModel
+
+
+class MainActivityModel :ViewModel() {
+
+private val _counter = mutableStateOf(0)
+    val counter:State<Int> = _counter
+
+fun add(){
+    _counter.value = _counter.value + 1
+}
+    fun reset(){
+        _counter.value =0
+    }
+    fun sumar(){
+        _counter.value=_counter.value+2
+    }
+    fun restar(){
+      _counter.value  = _counter.value-1
+
+    }
+    fun sumarFor2(){
+        _counter.value = _counter.value+2
+    }
+    fun sumarFor5(){
+        _counter.value = _counter.value+5
+    }
+
 //
 //
-//
-//
-
-    private var mCounter = 0
-
-    override fun getCounter() = mCounter
-
-    override fun incrementCounter() {
-        
-        mCounter++
-    }
-
-    override fun incrementCounterFor2(){
-
-        mCounter = mCounter + 2
-    }
-    override fun incrementCounterFor5(){
-
-        mCounter = mCounter + 5
-
-    }
-    override fun decreaseCounter(){
-
-        mCounter = mCounter - 1
-    }
-
-    override fun resetCounter(){
-
-        mCounter = 0
-    }
 //
 
 
