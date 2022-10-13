@@ -8,6 +8,7 @@ import androidx.activity.viewModels
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowDropDown
@@ -17,6 +18,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.KeyboardCapitalization
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.composeapp.R
@@ -49,18 +53,25 @@ class MainActivity : ComponentActivity() {
 //                ButtonDecreaseValue()
 //                ButtonIncrementValueFor2()
 //                ButtonIncrementFor5Value()
-                imagen()
-                Spacer(Modifier.height(10.dp))
+//                imagen()
+//                Spacer(Modifier.height(10.dp))
+                Text(text = "Calcular IMC")
                 generarSpinner(ovm)
+                //containerTexts(ovm)
             Row(
                 Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween,
+                horizontalArrangement = Arrangement.Center,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Text(text = "Total: " + ovm.result.value.toString() +"  MXN")
-                ButtonResetValue()
+                //Text(text = "Total: $" + ovm.result.value.toString() +"  MXN")
+
                 }
+                    textField()
+                containerTexts(ovm = ovm)
+                    
+
             }
+
         }
     }
 @Composable
@@ -74,12 +85,20 @@ fun imagen(){
 }
 
     @Composable
-    fun ViewPractice() {
+    fun containerTexts(ovm: MainActivityModel) {
 
-        Button(onClick = { ovm.add() }) {
-            Text(text = "Sumar + 1")
+        Card(
+            Modifier.fillMaxWidth()
+        ) {
+            Column() {
+                Text(text = "Su sexo es : "+ovm.sexo.value.toString())
+                Text(text = "IMC : "+ ovm.imc.value.toString())
+                Text(text = "Tiene : " +ovm.tiene.value.toString(), fontWeight = FontWeight.Bold)
+
+            }
 
         }
+
 
     }
 
@@ -91,20 +110,33 @@ fun imagen(){
     }
 
     @Composable
-    fun ButtonResetValue() {
-        Button(onClick = { ovm.reset() }) {
-            Text(text = "Reiniciar")
+    fun ButtonResetValue(peso:String,estatura:String) {
+        Button(onClick =
+        {
+            ovm.calculateIMC(peso = peso, altura = estatura)
+
+        }
+        ) {
+
+            Text(text = "Calcular")
 
         }
     }
-
     @Composable
-    fun ButtonDecreaseValue() {
-        Button(onClick = { ovm.restar() }) {
-            Text(text = "Restar")
+    fun ButtonDescuento(value: String) {
+        Button(onClick = { ovm.restar(value.toDouble()) }) {
+            Text(text = "Descuento")
 
         }
     }
+
+//    @Composable
+//    fun ButtonDecreaseValue() {
+//        Button(onClick = { ovm.restar() }) {
+//            Text(text = "Restar")
+//
+//        }
+//    }
 
     @Composable
     fun ButtonIncrementValueFor2() {
@@ -122,24 +154,65 @@ fun imagen(){
         }
     }
 
-//    @Composable
-//    fun textFiel() {
-////        var textTemp = remember {
-////            mutableStateOf(0)
-////        }
+    @Composable
+    fun textField() {
+        var _estatura = remember {
+            mutableStateOf("")
+        }
+
+        var _peso = remember {
+            mutableStateOf("")
+        }
+        Column(
+
+            Modifier.fillMaxWidth(),
+            //horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+            ButtonResetValue(peso = _peso.value, estatura = _estatura.value)
+            Row(
+                Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween
+
+            ) {
+
+                Text(text = "Estura")
+                TextField(
+
+                    value = _estatura.value, onValueChange = {
+                        _estatura.value = it
+                    },
+
+                    Modifier.width(100.dp),
+
+                    keyboardOptions = KeyboardOptions(KeyboardCapitalization.None, true, KeyboardType.Number),
+                )
+            }
+
+            Row(
+                Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                Text(text = "Peso KG")
+                TextField(
+
+                    value = _peso.value, onValueChange = {
+                        _peso.value = it
+                    },
+
+                    Modifier.width(100.dp),
+
+                    keyboardOptions = KeyboardOptions(KeyboardCapitalization.None, true, KeyboardType.Number),
+                )
+            }
+        }
+        
+//        Text(text = "Value String: " + ovm.text.value.toString())
 //
-//
-////        Text(text = "Value String: " + ovm.text.value.toString())
-////
-////        Button(onClick = { ovm.setString(textTemp.value.toString()) }) {
-////            Text(text = "Obten string")
-////
-////        }
-//
-//
-//
-//
-//    }
+//        Button(onClick = { ovm.setString(textTemp.value.toString()) }) {
+//            Text(text = "Obten string")
+
+        }
+
 
     @Composable
     fun generarSpinner(ovm: MainActivityModel) {
@@ -148,7 +221,7 @@ fun imagen(){
 
         Box {
             Button(onClick = { expanded = !expanded }) {
-                Text("Opciones")
+                Text("Seleciona Sexo")
                 Icon(
                     imageVector = Icons.Filled.ArrowDropDown,
                     contentDescription = null,
@@ -160,36 +233,42 @@ fun imagen(){
             ) {
 
                 DropdownMenuItem(onClick = {
-                    ovm.setLapiz()
-                    ovm.setSum(ovm.lapiz.value)
+//                    ovm.addObject()
+//                    ovm.setLapiz()
+//                    ovm.setSum(ovm.lapiz.value)
+                    ovm.setMasculino()
                     expanded = false
                 }) {
-                    Text(text = "Lapiz $10")
+                    Text(text = "Masculino")
                 }
                 DropdownMenuItem(onClick = {
-                    ovm.setBorrador()
-                    ovm.setSum(ovm.borrador.value)
+//                    ovm.addObject()
+//                    ovm.setBorrador()
+//                    ovm.setSum(ovm.borrador.value)
+                    ovm.setFemenino()
 
                     expanded = false
                 }) {
-                    Text(text = "Borrador $5")
+                    Text(text = "Femenino")
                 }
-                DropdownMenuItem(onClick = {
-                    ovm.setLapicero()
-                    ovm.setSum(ovm.lapicero.value)
-
-                    expanded = false
-                }) {
-                    Text(text = "Lapicero $15")
-                }
-                DropdownMenuItem(onClick = {
-                    ovm.setCuaderno()
-                    ovm.setSum(ovm.cuaderno.value)
-
-                    expanded = false
-                }) {
-                    Text(text = "Cuaderno $30")
-                }
+//                DropdownMenuItem(onClick = {
+//                    ovm.addObject()
+//                    ovm.setLapicero()
+//                    ovm.setSum(ovm.lapicero.value)
+//
+//                    expanded = false
+//                }) {
+//                    Text(text = "Lapicero $15")
+//                }
+//                DropdownMenuItem(onClick = {
+//                    ovm.addObject()
+//                    ovm.setCuaderno()
+//                    ovm.setSum(ovm.cuaderno.value)
+//
+//                    expanded = false
+//                }) {
+//                    Text(text = "Cuaderno $30")
+//                }
             }
         }
     }
