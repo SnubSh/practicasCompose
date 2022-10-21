@@ -209,7 +209,7 @@ fun viewComponents(){
                         ovm.setName(_nombre.value)
                     },
                     Modifier.width(250.dp),
-                    keyboardOptions = KeyboardOptions(KeyboardCapitalization.None, true, KeyboardType.Number),
+                    keyboardOptions = KeyboardOptions(KeyboardCapitalization.None, true, KeyboardType.Text),
                 )
             }
 
