@@ -23,6 +23,7 @@ import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.example.composeapp.R
 
 //val gray = Color(	0xFFE6E6E6)
@@ -39,49 +40,63 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
 
         setContent {
-            Column(
-                Modifier
-                    .fillMaxWidth()
-                    .fillMaxHeight()
-                    .padding(all = 30.dp)
-                    ,
-                horizontalAlignment = Alignment.CenterHorizontally,
 
-            ) {
-//                string()
-//                ViewPractice()
-//                ButtonDecreaseValue()
-//                ButtonIncrementValueFor2()
-//                ButtonIncrementFor5Value()
-//                imagen()
-//                Spacer(Modifier.height(10.dp))
-                Text(text = "Calcular IMC")
-                generarSpinner(ovm)
-                //containerTexts(ovm)
-            Row(
-                Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.Center,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                //Text(text = "Total: $" + ovm.result.value.toString() +"  MXN")
-
-                }
-                    textField()
-                containerTexts(ovm = ovm)
-                    
-
-            }
+            viewComponents()
 
         }
     }
 @Composable
-fun imagen(){
-    Row(
-        Modifier.clip(shape = RoundedCornerShape(20.dp))
-    ) {
-        Image(painterResource(id = R.drawable.coin),"")
+fun viewComponents(){
+    Column(
+        Modifier
+            .fillMaxWidth()
+            .fillMaxHeight()
+            .padding(all = 30.dp)
+        ,
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Top
+        ) {
+        titles("Cotizador de autos nuevos")
+        Row(
+            Modifier.clip(shape = RoundedCornerShape(20.dp))
+        ) {
+            Image(painterResource(id = R.drawable.coin),"",Modifier.size(90.dp))
+
+        }
+
+        input(ovm)
+        Row(
+            Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+
+            titles("Vehículo:")
+            marcas(ovm = ovm)
+        }
+        Row(
+            Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+
+            titles("Enganche:")
+            enganche(ovm = ovm)
+        }
+        Row(
+            Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+
+            titles("Financiamiento (anual):")
+            financiamiento(ovm = ovm)
+        }
+        containerTexts(ovm = ovm)
+
 
     }
+
 }
 
     @Composable
@@ -90,138 +105,135 @@ fun imagen(){
         Card(
             Modifier.fillMaxWidth()
         ) {
-            Column() {
-                Text(text = "Su sexo es : "+ovm.sexo.value.toString())
-                Text(text = "IMC : "+ ovm.imc.value.toString())
-                Text(text = "Tiene : " +ovm.tiene.value.toString(), fontWeight = FontWeight.Bold)
+            Column(
+                Modifier
+                    .fillMaxWidth()
+                    .padding(20.dp)
+            ) {
+                Row(
+                    Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    Text(text = "Nombre : ")
+                    Text(text = "${ovm.nombre.value.toString()}", fontWeight = FontWeight.Bold)
+                }
+                Divider()
+                Row(
+                    Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween
 
+                ) {
+                    Text(text = "Vehículo : ")
+                    Text(text = "${ovm.marca.value.toString()}", fontWeight = FontWeight.Bold)
+
+                }
+                Divider()
+                Row(
+                    Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    Text(text = "Enganche : ")
+                    Text(
+                        text = "(${ovm.porcentaje.value.toString()}%) de $ ${ovm.enganche.value.toString()}",
+                        fontWeight = FontWeight.Bold
+                    )
+
+                }
+                Divider()
+                Row(
+                    Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    Text(text = "Monto a financiar: ")
+                    Text(
+                        text = "$ ${ovm.financiamiento.value.toString()}",
+                        fontWeight = FontWeight.Bold
+                    )
+
+                }
+                Divider()
+                Row(
+                    Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    Text(text = "Financiamiento : a ")
+                    Text(text = "${ovm.plazo.value}", fontWeight = FontWeight.Bold)
+
+                }
+                Divider()
+                Text(text = "Monto de intereses por ${ovm.anios.value.toString()} años: ")
+                Text(text = "$ ${ovm.interes.value.toString()}", fontWeight = FontWeight.Bold)
+                Divider()
+                Text(text = "Monto a financiar + intereses: ")
+                Text(text = "$ ${ovm.financiamiento.value.toString()} + $ ${ovm.interes.value.toString()} = ${ovm.total.value.toString()}", fontWeight = FontWeight.Bold)
+                Divider()
+                Row(
+                    Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    Text(text = "Pagos mensuales por: ")
+                    Text(
+                        text = "$ ${ovm.pagomensual.value.toString()}",
+                        fontWeight = FontWeight.Bold
+                    )
+
+                }
+                Divider()
+                Text(text = "Costo total ( Enganche + Financiamiento ): ")
+                Text(text = "$ ${ovm.enganche.value.toString()} + $ ${ovm.total.value.toString()} = $ ${ovm.enganche.value + ovm.total.value}", fontWeight = FontWeight.Bold)
+                Divider()
+                Button(onClick = {ovm.clearData()},Modifier.fillMaxWidth()) {
+                    Text(text = "Limpiar")
+                }
             }
-
-        }
-
-
-    }
-
-    @Composable
-    fun string() {
-        Text(text = "Valor es: " + ovm.counter.value.toString())
-
-
-    }
-
-    @Composable
-    fun ButtonResetValue(peso:String,estatura:String) {
-        Button(onClick =
-        {
-            ovm.calculateIMC(peso = peso, altura = estatura)
-
-        }
-        ) {
-
-            Text(text = "Calcular")
-
-        }
-    }
-    @Composable
-    fun ButtonDescuento(value: String) {
-        Button(onClick = { ovm.restar(value.toDouble()) }) {
-            Text(text = "Descuento")
-
-        }
-    }
-
-//    @Composable
-//    fun ButtonDecreaseValue() {
-//        Button(onClick = { ovm.restar() }) {
-//            Text(text = "Restar")
-//
-//        }
-//    }
-
-    @Composable
-    fun ButtonIncrementValueFor2() {
-        Button(onClick = { ovm.sumarFor2() }) {
-            Text(text = "incrementar + 2")
-
         }
     }
 
     @Composable
-    fun ButtonIncrementFor5Value() {
-        Button(onClick = { ovm.sumarFor5() }) {
-            Text(text = "incrementar + 5")
-
-        }
-    }
-
-    @Composable
-    fun textField() {
-        var _estatura = remember {
-            mutableStateOf("")
-        }
-
-        var _peso = remember {
+    fun input(ovm: MainActivityModel) {
+        var _nombre = remember {
             mutableStateOf("")
         }
         Column(
-
             Modifier.fillMaxWidth(),
-            //horizontalArrangement = Arrangement.SpaceBetween
         ) {
-            ButtonResetValue(peso = _peso.value, estatura = _estatura.value)
             Row(
                 Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween
-
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
             ) {
-
-                Text(text = "Estura")
+                titles(title = "Nombre:")
                 TextField(
-
-                    value = _estatura.value, onValueChange = {
-                        _estatura.value = it
+                    value = _nombre.value, onValueChange = {
+                        _nombre.value = it
+                        ovm.setName(_nombre.value)
                     },
-
-                    Modifier.width(100.dp),
-
+                    Modifier.width(250.dp),
                     keyboardOptions = KeyboardOptions(KeyboardCapitalization.None, true, KeyboardType.Number),
                 )
             }
 
-            Row(
-                Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween
-            ) {
-                Text(text = "Peso KG")
-                TextField(
-
-                    value = _peso.value, onValueChange = {
-                        _peso.value = it
-                    },
-
-                    Modifier.width(100.dp),
-
-                    keyboardOptions = KeyboardOptions(KeyboardCapitalization.None, true, KeyboardType.Number),
-                )
-            }
         }
         
-//        Text(text = "Value String: " + ovm.text.value.toString())
-//
-//        Button(onClick = { ovm.setString(textTemp.value.toString()) }) {
-//            Text(text = "Obten string")
-
-        }
-
+    }
 
     @Composable
-    fun generarSpinner(ovm: MainActivityModel) {
+    fun titles(title:String) {
+        Text(text = title, fontWeight = FontWeight.Bold, fontSize = 20.sp)
+    }
 
+    @Composable
+    fun marcas(ovm: MainActivityModel) {
         var expanded by remember { mutableStateOf(false) }
-
+        val labels = listOf(
+            "Honda Accord $678,026.22",
+            "Vw Touareg $879,266.15",
+            "BMW X5 $1,025,366.87",
+            "Mazda CX7 $988,641.02",
+        )
         Box {
             Button(onClick = { expanded = !expanded }) {
-                Text("Seleciona Sexo")
+                Text("Marca")
                 Icon(
                     imageVector = Icons.Filled.ArrowDropDown,
                     contentDescription = null,
@@ -231,69 +243,79 @@ fun imagen(){
                 expanded = expanded,
                 onDismissRequest = { expanded = true },
             ) {
-
-                DropdownMenuItem(onClick = {
-//                    ovm.addObject()
-//                    ovm.setLapiz()
-//                    ovm.setSum(ovm.lapiz.value)
-                    ovm.setMasculino()
-                    expanded = false
-                }) {
-                    Text(text = "Masculino")
+                labels.forEach { label ->
+                    DropdownMenuItem(onClick = {
+                        ovm.setMarca(labels.indexOf(label))
+                        expanded = false
+                    }) {
+                        Text(text = label)
+                    }
                 }
-                DropdownMenuItem(onClick = {
-//                    ovm.addObject()
-//                    ovm.setBorrador()
-//                    ovm.setSum(ovm.borrador.value)
-                    ovm.setFemenino()
-
-                    expanded = false
-                }) {
-                    Text(text = "Femenino")
+            }
+        }
+    }
+    @Composable
+    fun enganche(ovm: MainActivityModel) {
+        var expanded by remember { mutableStateOf(false) }
+        val labels = listOf(
+            "20%",
+            "40%",
+            "60%",
+        )
+        Box {
+            Button(onClick = { expanded = !expanded }) {
+                Text("Porcentaje")
+                Icon(
+                    imageVector = Icons.Filled.ArrowDropDown,
+                    contentDescription = null,
+                )
+            }
+            DropdownMenu(
+                expanded = expanded,
+                onDismissRequest = { expanded = true },
+            ) {
+                labels.forEach { label ->
+                    DropdownMenuItem(onClick = {
+                        ovm.setPorcentaje(labels.indexOf(label))
+                        expanded = false
+                    }) {
+                        Text(text = label)
+                    }
                 }
-//                DropdownMenuItem(onClick = {
-//                    ovm.addObject()
-//                    ovm.setLapicero()
-//                    ovm.setSum(ovm.lapicero.value)
-//
-//                    expanded = false
-//                }) {
-//                    Text(text = "Lapicero $15")
-//                }
-//                DropdownMenuItem(onClick = {
-//                    ovm.addObject()
-//                    ovm.setCuaderno()
-//                    ovm.setSum(ovm.cuaderno.value)
-//
-//                    expanded = false
-//                }) {
-//                    Text(text = "Cuaderno $30")
-//                }
+            }
+        }
+    }
+    @Composable
+    fun financiamiento(ovm: MainActivityModel) {
+        var expanded by remember { mutableStateOf(false) }
+        val labels = listOf(
+            "1 año al 7.5%",
+            "2 años al 9.5%",
+            "3 años al 10.3%",
+            "4 años al 12.6%",
+            "5 años al 13.5%",
+        )
+        Box {
+            Button(onClick = { expanded = !expanded }) {
+                Text("Plazo")
+                Icon(
+                    imageVector = Icons.Filled.ArrowDropDown,
+                    contentDescription = null,
+                )
+            }
+            DropdownMenu(
+                expanded = expanded,
+                onDismissRequest = { expanded = true },
+            ) {
+                labels.forEach { label ->
+                    DropdownMenuItem(onClick = {
+                        ovm.setFinanciamiento(labels.indexOf(label))
+                        expanded = false
+                    }) {
+                        Text(text = label)
+                    }
+                }
             }
         }
     }
 }
-
-
-    //Vista previa
-//    @Preview(showSystemUi= true)
-//    @Composable
-//    fun Preview() {
-//        ViewPractice()
-//    }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

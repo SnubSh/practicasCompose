@@ -9,140 +9,199 @@ import androidx.lifecycle.ViewModel
 
 class MainActivityModel :ViewModel() {
 
-    private val _counter = mutableStateOf(0)
-    val counter:State<Int> = _counter
-    private val _nObjects = mutableStateOf(0)
-    val nObjects:State<Int> = _nObjects
-    private val _descuento = mutableStateOf(0)
-    val descuento:State<Int> = _descuento
+    //Nombre
+    private val _nombre = mutableStateOf("")
+    val nombre:State<String> = _nombre
 
-    private val _text = mutableStateOf("")
-    val text:State<String> = _text
-
-    private val _textDropDown = mutableStateOf("")
-    val textDropDown:State<String> = _textDropDown
-
-    private val _lapiz = mutableStateOf(0)
-    val lapiz:State<Int> = _lapiz
-
-    private val _lapicero = mutableStateOf(0)
-    val lapicero:State<Int> = _lapicero
-
-    private val _borrador = mutableStateOf(0)
-    val borrador:State<Int> = _borrador
-
-    private val _cuaderno = mutableStateOf(0)
-    val cuaderno:State<Int> = _cuaderno
-
-    private val _result = mutableStateOf(0)
-    val result:State<Int> = _result
-
-    private val _sexo = mutableStateOf("")
-    val sexo:State<String> = _sexo
-    private val _tiene = mutableStateOf("")
-    val tiene:State<String> = _tiene
-
-    private val _estatura = mutableStateOf(0.0)
-    val estatura:State<Double> = _estatura
-
-    private val _peso = mutableStateOf(0.0)
-    val peso:State<Double> = _peso
-
-    private val _imc = mutableStateOf(0.0)
-    val imc:State<Double> = _imc
+    //Vehículo
+    private val _marca = mutableStateOf("")
+    val marca:State<String> = _marca
+    private val _valor = mutableStateOf(0.0)
+    val valor:State<Double> = _valor
 
 
+    private val _HondaAccord = mutableStateOf(678026.22)
+    val HondaAccord:State<Double> = _HondaAccord
+    private val _VwTouareg = mutableStateOf(879266.15)
+    val VwTouareg:State<Double> = _VwTouareg
+    private val _BMWX5 = mutableStateOf(1025366.87)
+    val BMWX5:State<Double> = _BMWX5
+    private val _MazdaCX7 = mutableStateOf(988641.02)
+    val MazdaCX7:State<Double> = _MazdaCX7
 
-    fun calculateIMC(peso:String,altura:String){
-        _estatura.value = altura.toDouble()
-        _peso.value = peso.toDouble()
+    //Porcentajes
+    private val _porcentaje = mutableStateOf(0)
+    val porcentaje:State<Int> = _porcentaje
+    private val _enganche = mutableStateOf(0.0)
+    val enganche:State<Double> = _enganche
 
-        _imc.value =  _peso.value / (_estatura.value * _estatura.value)
+    private val _P60 = mutableStateOf(60)
+    val P60:State<Int> = _P60
+    private val _P40 = mutableStateOf(40)
+    val P40:State<Int> = _P40
+    private val _P20 = mutableStateOf(20)
+    val P20:State<Int> = _P20
 
-        _imc.value.toString().replace(",",".")
+    //Financiamiento
+    private val _financiamiento = mutableStateOf(0.0)
+    val financiamiento:State<Double> = _financiamiento
+    private val _anios = mutableStateOf(0)
+    val anios:State<Int> = _anios
+    private val _plazo = mutableStateOf("")
+    val plazo:State<String> = _plazo
+    private val _interes = mutableStateOf(0.0)
+    val interes:State<Double> = _interes
+    private val _tasa = mutableStateOf(0.0)
+    private val _total = mutableStateOf(0.0)
+    val total:State<Double> = _total
+    private val _meses = mutableStateOf(0)
+    private val _pagomensual = mutableStateOf(0.0)
+    val pagomensual:State<Double> = _pagomensual
 
-        setTiene(_imc.value.toDouble())
-
-    }
-    fun setTiene(value:Double){
-
-
-        if(value < 18.4){
-            _tiene.value = "Insuficiencia ponderal/ Bajo peso"
+    fun setMarca(index:Int){
+        when (index) {
+            0 -> setHonda()
+            1 -> setVw()
+            2 -> setBMW()
+            3 -> setMazda()
+            else -> {
+                print("")
+            }
         }
-        else
-            if(value ==  18.5 || value <= 24.9) {
-            _tiene.value = "Normopeso"
+    }
+
+    fun setPorcentaje(index:Int){
+        when (index) {
+            0 -> set20()
+            1 -> set40()
+            2 -> set60()
+            else -> {
+                print("")
             }
-        else
-            if(value ==  25.0 || value <= 29.9){
-            _tiene.value = "Sobrepeso"
-            }
-        else
-            if(value == 30.0 || value <= 34.9){
-            _tiene.value = "Obesidad grado I"
-            }
-        else
-            if(value == 35.0 || value <= 39.9){
-            _tiene.value = "Obesidad grado II"
-            }
-        else
-            if(value > 40){
-            _tiene.value = "Obesidad grado III o mórbida"
         }
+    }
+
+    fun setFinanciamiento(index: Int){
+        when (index) {
+            0 -> setOneYear()
+            1 -> setTwoYears()
+            2 -> setThreeYears()
+            3 -> setFourYears()
+            4 -> setFiveYears()
+
+            else -> {
+                print("")
+            }
+        }
+    }
+
+    fun setHonda(){
+        _marca.value = "Honda Accord $ ${ _HondaAccord.value.toString() }"
+        _valor.value = _HondaAccord.value
+    }
+    fun setVw(){
+        _marca.value = "Vw Touareg $ ${_VwTouareg.value.toString()}"
+        _valor.value = _VwTouareg.value
+    }
+    fun setBMW(){
+        _marca.value = "BMW X5 $ ${_BMWX5.value.toString()}"
+        _valor.value = _BMWX5.value
+    }
+    fun setMazda(){
+        _marca.value = "Mazda CX7 $ ${ _MazdaCX7.value.toString() }"
+        _valor.value = _MazdaCX7.value
+    }
+
+    fun set20(){
+        _porcentaje.value = _P20.value
+        calcularEnganche(_porcentaje.value,_valor.value)
+    }
+    fun set40(){
+        _porcentaje.value = _P40.value
+        calcularEnganche(_porcentaje.value,_valor.value)
+    }
+    fun set60(){
+        _porcentaje.value = _P60.value
+        calcularEnganche(_porcentaje.value,_valor.value)
+    }
+
+    fun calcularEnganche(porcentaje:Int,valor:Double){
+        _enganche.value = porcentaje * valor / 100
+        calcularFinanciamiento(_valor.value,_enganche.value)
+
+    }
+    fun setName(nombre:String){
+        _nombre.value = nombre
+    }
+    fun calcularFinanciamiento(valor: Double, enganche:Double){
+        _financiamiento.value = valor - enganche
+
+    }
+    fun calcularInteres(tasa:Double,financiamiento:Double, anios:Int){
+        _interes.value = tasa * financiamiento / 100 * anios
+        calcularTotal()
+    }
+    fun calcularTotal(){
+        _total.value = _financiamiento.value + _interes.value
+        _pagomensual.value = _total.value / _meses.value
+    }
+    fun setOneYear(){
+        _plazo.value = "1 año, tasa 7.5%"
+        _anios.value = 1
+        _tasa.value = 7.5
+        _meses.value = 12
+        calcularInteres(_tasa.value,_financiamiento.value,_anios.value)
+
+    }
+    fun setTwoYears(){
+        _plazo.value = "2 años, tasa 9.5%"
+        _anios.value = 2
+        _tasa.value = 9.5
+        _meses.value = 24
+        calcularInteres(_tasa.value,_financiamiento.value,_anios.value)
+
+    }
+    fun setThreeYears(){
+        _plazo.value = "3 años, tasa 10.3%"
+        _anios.value = 3
+        _tasa.value = 10.3
+        _meses.value = 36
+        calcularInteres(_tasa.value,_financiamiento.value,_anios.value)
+
+    }
+    fun setFourYears(){
+        _plazo.value = "4 años, tasa 12.6%"
+        _anios.value = 4
+        _tasa.value = 12.6
+        _meses.value = 48
+        calcularInteres(_tasa.value,_financiamiento.value,_anios.value)
+
+    }
+    fun setFiveYears(){
+        _plazo.value = "5 años, tasa 13.5%"
+        _anios.value = 5
+        _tasa.value = 13.5
+        _meses.value = 60
+        calcularInteres(_tasa.value,_financiamiento.value,_anios.value)
+
+    }
+
+    fun clearData(){
+        _nombre.value = ""
+        _porcentaje.value = 0
+        _marca.value = ""
+        _enganche.value = 0.0
+        _financiamiento.value = 0.0
+        _plazo.value = ""
+        _anios.value = 0
+        _interes.value = 0.0
+        _pagomensual.value = 0.0
+        _total.value = 0.0
+    }
 
 
 
-    }
-    fun setStringDropDown(msg:String){
-        _textDropDown.value = msg
-    }
-    fun setFemenino(){
-    _sexo.value="Femenino"
-    }
-    fun setMasculino(){
-        _sexo.value="Masculino"
-    }
-    fun setLapiz(){
-        _lapiz.value = 10
-    }
-    fun setLapicero(){
-        _lapicero.value = 15
-    }
-    fun setBorrador(){
-        _borrador.value = 5
-    }
-    fun setCuaderno(){
-        _cuaderno.value = 30
-    }
-    fun setSum(value:Int){
-        _result.value = _result.value + value
-    }
-    fun addObject(){
-    _nObjects.value = _nObjects.value + 1
-}
-    fun reset(){
-        _result.value = 0
-    }
-    fun restar(value: Double){
-        _descuento.value = value.toInt()
-        _result.value  = _result.value - value.toInt()
 
-    }
-    fun sumar(){
-        _counter.value=_counter.value+2
-    }
-
-    fun sumarFor2(){
-        _counter.value = _counter.value+2
-    }
-    fun sumarFor5(){
-        _counter.value = _counter.value+5
-    }
-
-//
-//
-//
 
 
 }
