@@ -3,6 +3,7 @@ import MainActivityModel
 import android.icu.text.DecimalFormat
 import android.os.Build
 import android.os.Bundle
+import android.widget.ListView
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
@@ -10,8 +11,10 @@ import androidx.annotation.RequiresApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowDropDown
@@ -50,12 +53,13 @@ class MainActivity : ComponentActivity() {
     }
 @Composable
 fun viewComponents(){
+
     Column(
         Modifier
             .fillMaxWidth()
             .fillMaxHeight()
-            .padding(all = 30.dp)
-        ,
+            .padding(all = 10.dp)
+            .verticalScroll(rememberScrollState()),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Top
         ) {
@@ -196,7 +200,7 @@ fun viewComponents(){
                         _nombre.value = it
                         ovm.setName(_nombre.value)
                     },
-                    Modifier.width(250.dp),
+                    Modifier.width(280.dp),
                     keyboardOptions = KeyboardOptions(KeyboardCapitalization.None, true, KeyboardType.Text),
                 )
             }
