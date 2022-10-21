@@ -1,11 +1,14 @@
 package com.example.composeapp.view
 import MainActivityModel
-import android.graphics.drawable.Drawable
+import android.icu.text.DecimalFormat
+import android.os.Build
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
@@ -16,15 +19,15 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.composeapp.R
+
 
 //val gray = Color(	0xFFE6E6E6)
 //val azul = Color(	0xFF8904B1)
@@ -99,8 +102,12 @@ fun viewComponents(){
 
 }
 
+
+
     @Composable
+
     fun containerTexts(ovm: MainActivityModel) {
+
 
         Card(
             Modifier.fillMaxWidth()
@@ -115,7 +122,7 @@ fun viewComponents(){
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
                     Text(text = "Nombre : ")
-                    Text(text = "${ovm.nombre.value.toString()}", fontWeight = FontWeight.Bold)
+                    Text(text = " ${ ovm.nombre.value.toString()}", fontWeight = FontWeight.Bold)
                 }
                 Divider()
                 Row(
@@ -128,17 +135,8 @@ fun viewComponents(){
 
                 }
                 Divider()
-                Row(
-                    Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceBetween
-                ) {
-                    Text(text = "Enganche : ")
-                    Text(
-                        text = "(${ovm.porcentaje.value.toString()}%) de $ ${ovm.enganche.value.toString()}",
-                        fontWeight = FontWeight.Bold
-                    )
-
-                }
+                Text(text = "Enganche : ")
+                Text(text = "(${ovm.porcentaje.value.toString()}%) de $ ${ovm.enganche.value.toString()}", fontWeight = FontWeight.Bold)
                 Divider()
                 Row(
                     Modifier.fillMaxWidth(),
@@ -158,7 +156,6 @@ fun viewComponents(){
                 ) {
                     Text(text = "Financiamiento : a ")
                     Text(text = "${ovm.plazo.value}", fontWeight = FontWeight.Bold)
-
                 }
                 Divider()
                 Text(text = "Monto de intereses por ${ovm.anios.value.toString()} años: ")
@@ -167,17 +164,8 @@ fun viewComponents(){
                 Text(text = "Monto a financiar + intereses: ")
                 Text(text = "$ ${ovm.financiamiento.value.toString()} + $ ${ovm.interes.value.toString()} = ${ovm.total.value.toString()}", fontWeight = FontWeight.Bold)
                 Divider()
-                Row(
-                    Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceBetween
-                ) {
-                    Text(text = "Pagos mensuales por: ")
-                    Text(
-                        text = "$ ${ovm.pagomensual.value.toString()}",
-                        fontWeight = FontWeight.Bold
-                    )
-
-                }
+                Text(text = "Pagos mensuales por: ")
+                Text(text = "$ ${ovm.pagomensual.value.toString()}", fontWeight = FontWeight.Bold)
                 Divider()
                 Text(text = "Costo total ( Enganche + Financiamiento ): ")
                 Text(text = "$ ${ovm.enganche.value.toString()} + $ ${ovm.total.value.toString()} = $ ${ovm.enganche.value + ovm.total.value}", fontWeight = FontWeight.Bold)
@@ -219,7 +207,7 @@ fun viewComponents(){
 
     @Composable
     fun titles(title:String) {
-        Text(text = title, fontWeight = FontWeight.Bold, fontSize = 20.sp)
+        Text(text = title, fontWeight = FontWeight.Bold, fontSize = 15.sp)
     }
 
     @Composable
@@ -262,7 +250,9 @@ fun viewComponents(){
             "40%",
             "60%",
         )
-        Box {
+        Box(
+
+        ) {
             Button(onClick = { expanded = !expanded }) {
                 Text("Porcentaje")
                 Icon(
@@ -271,8 +261,10 @@ fun viewComponents(){
                 )
             }
             DropdownMenu(
+
                 expanded = expanded,
                 onDismissRequest = { expanded = true },
+
             ) {
                 labels.forEach { label ->
                     DropdownMenuItem(onClick = {
